@@ -1,0 +1,37 @@
+# EasyScreenRotationSampleApp
+
+1. LifiSycleの説明
+1-1. Android端末でアプリ起動→バックキーで終了した場合のサイクル
+```
+2020-06-28 17:38:53.777 14774-14774/com.example.easyscreenrotationsampleapp D/Main: onCreate()
+2020-06-28 17:38:53.785 14774-14774/com.example.easyscreenrotationsampleapp D/Main: onStart()
+2020-06-28 17:38:53.799 14774-14774/com.example.easyscreenrotationsampleapp D/Main: onResume()
+2020-06-28 17:39:15.939 14774-14774/com.example.easyscreenrotationsampleapp D/Main: onPause
+2020-06-28 17:39:15.940 14774-14818/com.example.easyscreenrotationsampleapp D/EGL_emulation: eglMakeCurrent: 0xebbb0740: ver 3 0 (tinfo 0xebbb9dc0)
+2020-06-28 17:39:15.942 14774-14774/com.example.easyscreenrotationsampleapp D/Main: onStop()
+2020-06-28 17:39:15.958 14774-14774/com.example.easyscreenrotationsampleapp D/Main: onDestory()
+```
+
+1-2.Android端末でアプリ起動→端末画面の向きを変更した場合のサイクル
+```
+2020-06-28 17:38:53.777 14774-14774/com.example.easyscreenrotationsampleapp D/Main: onCreate()
+2020-06-28 17:38:53.785 14774-14774/com.example.easyscreenrotationsampleapp D/Main: onStart()
+2020-06-28 17:38:53.799 14774-14774/com.example.easyscreenrotationsampleapp D/Main: onResume()
+2020-06-28 17:39:15.939 14774-14774/com.example.easyscreenrotationsampleapp D/Main: onPause
+2020-06-28 17:39:15.940 14774-14818/com.example.easyscreenrotationsampleapp D/EGL_emulation: eglMakeCurrent: 0xebbb0740: ver 3 0 (tinfo 0xebbb9dc0)
+2020-06-28 17:39:15.942 14774-14774/com.example.easyscreenrotationsampleapp D/Main: onStop()
+2020-06-28 17:39:15.958 14774-14774/com.example.easyscreenrotationsampleapp D/Main: onDestory()
+```
+1-1と同様。つまり、Androidでは端末画面の向きを変更すると、Activity内でのユーザー処理が全て初期化されてしまうことがわかる。
+これを回避するためには、AndroidManifest.xmlファイルに以下の一文を加えておくことでこの現象を防ぐことができる。
+```
+android:configChanges="orientation|screenSize"
+```
+また、画面を固定してしまい、そもそも端末画面の向きを固定してしまうという方法も存在する。
+```
+<!-- 縦方向 -->
+android:screenOrientation="portrait"
+ 
+<!-- 横方向 -->
+android:screenOrientation="landscape"
+```
